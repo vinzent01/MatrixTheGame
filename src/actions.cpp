@@ -148,8 +148,8 @@ void UseAction::Execute(Player& player, Terminal& terminal, std::vector<std::str
 
     // 1 Procura na sala
     for (auto& obj : player.CurrentRoom->Objects) {
-        if (obj.Name == objectName) {
-            obj.Use(player, terminal);  // chama a ação do objeto
+        if (obj->Name == objectName) {
+            obj->Use(player, terminal);  // chama a ação do objeto
             return;
         }
     }
@@ -166,6 +166,7 @@ vector<shared_ptr<Action>> GetAllActions(){
         make_shared<ExitAction>(),
         make_shared<ClearAction>(),
         make_shared<MoveAction>(),
+        make_shared<UseAction>(),
         make_shared<SaveGameAction>(),
         make_shared<HelpAction>()
     };

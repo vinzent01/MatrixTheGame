@@ -17,8 +17,8 @@ class Room{
     int Id;
     string Name;
     string Description;
-    vector<Object> Objects;
-    vector<Entity> Entities;
+    vector<shared_ptr<Object>> Objects;
+    vector<shared_ptr<Entity>> Entities;
     map<string, shared_ptr<Room>> Exits;
 
     Room();
@@ -27,9 +27,9 @@ class Room{
 
     string GetDescription();
 
-    void AddObject(Object obj);
+    void AddObject(shared_ptr<Object> obj);
 
-    void AddEntity(Entity entity);
+    void AddEntity(shared_ptr<Entity> entity);
 
     void Connect(string exit, shared_ptr<Room> room);
 };

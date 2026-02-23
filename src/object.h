@@ -35,11 +35,15 @@ class Object {
 };
 
 class Computer : public Object {
-    Computer(std::string user_name, std::string description, std::string laying);
+    public:
+    Computer(std::string user_name, std::string description, std::string laying="");
+    Computer();
     void Use(Player& player, Terminal& terminal) override;
 };
 
 // JSON 
+
+std::shared_ptr<Object> ObjectFactory(const json& j);
 
 void to_json(json& j, const Object& o);
 void to_json(json& j, const Entity& e);

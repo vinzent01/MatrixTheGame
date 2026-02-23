@@ -23,8 +23,12 @@ void Object::Use(Player& player, Terminal& terminal){
 
 }
 
-Computer::Computer(std::string user_name, std::string description, std::string laying){
-    this->Name = user_name + " Personal Computer";
+Computer::Computer(){
+
+}
+
+Computer::Computer(std::string name, std::string description, std::string laying){
+    this->Name = name;
     this->Description = description;
     this->count =1;
     this->laying = laying;
@@ -34,19 +38,39 @@ void Computer::Use(Player& player, Terminal& terminal){
     terminal.AddEntry("Using computer...");
 }
 
-// JSON 
+// object factory to enable polymorfism on Objects
+std::shared_ptr<Object> ObjectFactory(const json& j) {
+    std::string type = j.at("type").get<std::string>();
+    
+    if (type == "Computer") {
+        auto obj = std::make_shared<Computer>();
+        j.get_to(*obj);
+        return obj;
+    } 
+    else {
+        auto obj = std::make_shared<Object>();
+        j.get_to(*obj);
+        return obj;
+    }
+}
 
+// JSON 
 void to_json(json& j, const Object& o) {
     j = {
         {"name", o.Name},
-        {"description", o.Description}
+        {"description", o.Description},
+        {"laying", o.laying},
+        {"count", o.count},
+        {"type", typeid(o).name()}
+
     };
 };
 
 void to_json(json& j, const Entity& e) {
     j = {
         {"name", e.Name},
-        {"description", e.Description}
+        {"description", e.Description},
+        {"type", typeid(e).name()}
     };
 };
 
