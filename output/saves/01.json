@@ -1,0 +1,31 @@
+{
+    "current_room_id": 1,
+    "state": 1,
+    "world": {
+        "rooms": [
+            {
+                "Entities": [],
+                "Exits": {},
+                "Objects": [
+                    {
+                        "count": 1,
+                        "description": "neo's personal computer",
+                        "laying": "",
+                        "name": "pc",
+                        "type": "Computer"
+                    },
+                    {
+                        "count": 1,
+                        "description": "Old Calculator",
+                        "laying": "",
+                        "name": "Calculator",
+                        "type": "Object"
+                    }
+                ],
+                "description": "An a room full of electronic devices with a PC",
+                "id": 1,
+                "name": "neo room"
+            }
+        ]
+    }
+}

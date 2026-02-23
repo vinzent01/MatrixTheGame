@@ -19,6 +19,10 @@ Object::Object(string name, string description, string laying, int count){
     this->count = count;
 };
 
+ string Object::Type() const{
+    return "Object";
+}
+
 void Object::Use(Player& player, Terminal& terminal){
 
 }
@@ -32,6 +36,10 @@ Computer::Computer(std::string name, std::string description, std::string laying
     this->Description = description;
     this->count =1;
     this->laying = laying;
+}
+
+string Computer::Type() const{
+    return "Computer";
 }
 
 void Computer::Use(Player& player, Terminal& terminal){
@@ -61,7 +69,7 @@ void to_json(json& j, const Object& o) {
         {"description", o.Description},
         {"laying", o.laying},
         {"count", o.count},
-        {"type", typeid(o).name()}
+        {"type", o.Type()}
 
     };
 };

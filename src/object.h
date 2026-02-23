@@ -31,6 +31,7 @@ class Object {
     Object() =default;
     Object(string name, string description, string laying="", int count=1);
 
+    virtual string Type() const;
     virtual void Use(Player& player, Terminal& terminal);
 };
 
@@ -38,6 +39,8 @@ class Computer : public Object {
     public:
     Computer(std::string user_name, std::string description, std::string laying="");
     Computer();
+
+    string Type() const override;
     void Use(Player& player, Terminal& terminal) override;
 };
 
