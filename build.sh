@@ -1,0 +1,1 @@
+g++ ./src/*.cpp -g -o output/game -lraylib
