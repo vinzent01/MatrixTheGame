@@ -141,18 +141,6 @@ class HelpMenuAction : public Action {
 
 };
 
-class LoadGameAction : public Action {
-    public :
-    LoadGameAction() : Action({"Load"}, "load an game"){
-
-    };
-
-    void Execute(Player& player, Terminal& terminal, vector<string> args) override{
-
-    }
-
-};
-
 class StartNewGameAction : public Action {
     public :
     StartNewGameAction() : Action({"start"}, "start an game"){
@@ -161,7 +149,31 @@ class StartNewGameAction : public Action {
 
     void Execute(Player& player, Terminal& terminal, vector<string> args) override{
         player.State = GAME;
-        player.CurrentRoom = CreateWorld();
+        player.world = World();
+        player.CurrentRoom = player.world.rooms[1];
+    }
+};
+
+class SaveGameAction : public Action {
+    public :
+    SaveGameAction() : Action({"save"}, "save the game"){
+
+    }
+
+    void Execute(Player& player, Terminal& terminal, vector<string> args) override {
+        SavePlayer(player, "./saves/01.json");
+    }
+};
+
+class LoadGameAction : public Action {
+    public :
+    LoadGameAction() : Action({"Load"}, "load the game"){
+
+    }
+
+    void Execute(Player& player, Terminal& terminal, vector<string> args) override {
+        terminal.AddEntry("Loading save...");
+        LoadPlayer(player, "./saves/01.json");
     }
 };
 
@@ -171,6 +183,7 @@ vector<shared_ptr<Action>> GetAllActions(){
         make_shared<ExitAction>(),
         make_shared<ClearAction>(),
         make_shared<MoveAction>(),
+        make_shared<SaveGameAction>(),
         make_shared<HelpAction>()
     };
 };
@@ -179,6 +192,7 @@ vector<shared_ptr<Action>> GetAllActions(){
 vector<shared_ptr<Action>> GetAllMenuActions(){
     return {
         make_shared<StartNewGameAction>(),
+        make_shared<LoadGameAction>(),
         make_shared<HelpMenuAction>(),
     };
 }

@@ -1,0 +1,38 @@
+{
+    "current_room_id": 2,
+    "state": 1,
+    "world": {
+        "rooms": [
+            {
+                "description": "an dungeon entrance",
+                "entities": [],
+                "exits": {
+                    "north": 2
+                },
+                "id": 1,
+                "name": "dungeon entrance",
+                "objects": [
+                    {
+                        "description": "an large old iron door",
+                        "name": "large dusty door"
+                    }
+                ]
+            },
+            {
+                "description": "an old dusty dungeon hall",
+                "entities": [],
+                "exits": {
+                    "south": 1
+                },
+                "id": 2,
+                "name": "hall",
+                "objects": [
+                    {
+                        "description": "old marble statue of an knight",
+                        "name": "statue"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -3,13 +3,17 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include "json.hpp"
 
+using nlohmann::json;
 using namespace std;
 
 class Entity {
     public :
     string Name;
     string Description;
+
+    Entity() = default;
 
     Entity(string name, string description){
         this->Name = name;
@@ -24,23 +28,57 @@ class Object {
     string laying;
     int count;
 
+    Object() =default;
+
     Object(string name, string description, string laying="", int count=1){
         this->Name = name;
         this->Description = description;
         this->laying = laying;
         this->count = count;
-    }
+    };
+};
+
+// JSON 
+
+void to_json(json& j, const Object& o) {
+    j = {
+        {"name", o.Name},
+        {"description", o.Description}
+    };
+};
+
+void to_json(json& j, const Entity& e) {
+    j = {
+        {"name", e.Name},
+        {"description", e.Description}
+    };
+};
+
+void from_json(const json& j, Object& o) {
+    j.at("name").get_to(o.Name);
+    j.at("description").get_to(o.Description);
+};
+
+void from_json(const json& j, Entity& e) {
+    j.at("name").get_to(e.Name);
+    j.at("description").get_to(e.Description);
 };
 
 class Room{
     public:
+    int Id;
     string Name;
     string Description;
     vector<Object> Objects;
     vector<Entity> Entities;
     map<string, shared_ptr<Room>> Exits;
 
-    Room(string name, string description){
+    Room(){
+
+    }
+
+    Room(int id, string name, string description){
+        this->Id = id;
         this->Name = name;
         this->Description = description;
     }
@@ -101,22 +139,19 @@ class Room{
     }
 };
 
-shared_ptr<Room> CreateWorld(){
+void to_json(json& j, const Room& r) {
+    j = {
+        {"name", r.Name},
+        {"description", r.Description},
+        {"Objects", r.Objects},
+        {"Entities", r.Entities}
+    };
+};
 
-    auto dungeon_entrance = make_shared<Room>("dungeon entrane", "an dungeon entrance");
-    auto hall = make_shared<Room>("hall","an old dusty dungeon hall");
-
-    dungeon_entrance->AddObject(
-        Object("large dusty door", "an large old iron door")
-    );
-    
-    hall->AddObject(
-        Object("statue", "old marble statue of an knight", "on the center", 1)
-    );
-
-    dungeon_entrance->Connect("north", hall);
-    hall->Connect("south", dungeon_entrance);
-
-
-    return dungeon_entrance;
+void from_json(const json& j, Room& r){
+    j.at("id").get_to(r.Id);
+    j.at("name").get_to(r.Name);
+    j.at("description").get_to(r.Description);
+    j.at("Objects").get_to(r.Objects);
+    j.at("Entities").get_to(r.Entities);
 }

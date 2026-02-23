@@ -26,7 +26,7 @@ int main(){
     auto first_entrance = true;
 
     Player player;
-
+    player.State = MENU;
     
     while (exit == false)
     {
@@ -42,8 +42,6 @@ int main(){
         string prompt = terminal.Prompt("");
         string command = "";
         vector<string> args;
-
-
 
         ParseInput(prompt,command,args);        
         
